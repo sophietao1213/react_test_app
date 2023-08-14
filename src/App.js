@@ -1,59 +1,67 @@
-// import logo from './logo.svg';
-// import './App.css';
+import { useEffect, useState } from "react";
+import './App.css';
+import FadeLoader from "react-spinners/FadeLoader";
+import DropFileInput from "./Component/DropFileInput";
+// import FileUpload from "./Component/FileUpload";
+// import FileList from "./Component/FileList"
+// import Loaderdemo from './Component/Loaderdemo'
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;
-import './styles.css';
 function App() {
+  // const [files, setFiles] = useState([]);
+  // const removeFile = (filename) => {
+  //   setFiles(files.filter(file => file.name !== filename))
+  // }
+  // console.log(files)
+  const [loading, setLoading] = useState(false)
+  useEffect(()=> {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+    }, 2000)
+
+  },[])
+
+  const [result, setResult] = useState();
+  function showResults() {
+    fetch('http://localhost:3000/test.txt')
+    .then((res) => {
+      console.log(res)
+      return res.text()
+    }).then((data)=>{
+      console.log(data)
+      setResult(data)
+    })
+  }
+
   return (
-    <div className="calculator-grid">
-      <div className="output">
-        <div className="previous-operand">12*24</div>
-        <div className="current-operand">600</div>
-      </div>
+    // <div className='App'>
+    //   {/* <p className='title'>Upload xxxx File</p> */}
+    //   {/* <FileUpload files={files} setFiles={setFiles} removeFile = {removeFile} />
+    //   <FileList files={files} removeFile={removeFile} /> */}
+      
+    // </div>
 
-      <button className="span-two">AC</button>
-      <button>DEL</button>
-      <button>/</button>
+    <div className="box">
+      <h2 className="header">
+        Upload Test Files
+      </h2>
+      <DropFileInput/>
 
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
-      <button>*</button>
+      {/* {
+        loading?
+        <FadeLoader
+        color={'#D0021B'}
+        loading={loading}
+        size={100}
+        aria-label="Loading Spinner"
+        data-testid="loader"/>
+        :
+        <div>
+          <button onClick={showResults}>Show Text File</button>
+          <pre>{result}</pre>
+        </div>
+      } */}
 
-      <button>4</button>
-      <button>5</button>
-      <button>6</button>
-      <button>+</button>
-
-      <button>7</button>
-      <button>8</button>
-      <button>9</button>
-      <button>-</button>
-
-      <button>.</button>
-      <button>0</button>
-      <button className="span-two">=</button>
     </div>
   )
 }
