@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import './App.css';
 import FadeLoader from "react-spinners/FadeLoader";
 import DropFileInput from "./Component/DropFileInput";
+import axios from 'axios'
 // import FileUpload from "./Component/FileUpload";
 // import FileList from "./Component/FileList"
 // import Loaderdemo from './Component/Loaderdemo'
@@ -11,7 +12,6 @@ function App() {
   // const removeFile = (filename) => {
   //   setFiles(files.filter(file => file.name !== filename))
   // }
-  // console.log(files)
   const [loading, setLoading] = useState(false)
   useEffect(()=> {
     setLoading(true)
@@ -33,6 +33,14 @@ function App() {
     })
   }
 
+  const [loader, setLoader] = useState(false)
+  const [error, setError] = useState('')
+
+  // download pdf from api
+  function downloadPDF () {
+    
+  }
+
   return (
     // <div className='App'>
     //   {/* <p className='title'>Upload xxxx File</p> */}
@@ -41,27 +49,35 @@ function App() {
       
     // </div>
 
-    <div className="box">
-      <h2 className="header">
-        Upload Test Files
-      </h2>
-      <DropFileInput/>
+    // <div className="box">
+    //   <h2 className="header">
+    //     Upload Test Files
+    //   </h2>
+    //   <DropFileInput/>
 
-      {/* {
-        loading?
-        <FadeLoader
-        color={'#D0021B'}
-        loading={loading}
-        size={100}
-        aria-label="Loading Spinner"
-        data-testid="loader"/>
-        :
-        <div>
-          <button onClick={showResults}>Show Text File</button>
-          <pre>{result}</pre>
-        </div>
-      } */}
+    //   {
+    //     loading?
+    //     <FadeLoader
+    //     color={'#D0021B'}
+    //     loading={loading}
+    //     size={100}
+    //     aria-label="Loading Spinner"
+    //     data-testid="loader"/>
+    //     :
+    //     <div>
+    //       <button onClick={showResults}>Show Text File</button>
+    //       <pre>{result}</pre>
+    //     </div>
+    //   }
+    // </div>
 
+    <div className="App">
+      <h1>Download Files from API</h1>
+      <button onClick={downloadPDF}>
+        {loader? (<>Downloading</>) : (<>Download</>)}
+      </button>
+
+      {error !== '' && (<div className="error-msg">{error}</div>)}
     </div>
   )
 }
