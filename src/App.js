@@ -7,6 +7,12 @@ import axios from 'axios'
 // import FileList from "./Component/FileList"
 // import Loaderdemo from './Component/Loaderdemo'
 
+// File URL
+const PNG_FILE_URL = 'http://localhost:3000/file_png.png'
+const PDF_FILE_URL = 'http://localhost:3000/file_pdf.pdf'
+const CSV_FILE_URL = 'http://localhost:3000/file_csv.csv'
+const ZIP_FILE_URL = 'http://localhost:3000/file_zip.zip'
+
 function App() {
   // const [files, setFiles] = useState([]);
   // const removeFile = (filename) => {
@@ -33,13 +39,32 @@ function App() {
     })
   }
 
-  const [loader, setLoader] = useState(false)
-  const [error, setError] = useState('')
-
   // download pdf from api
-  function downloadPDF () {
-    
+  // const downloadFile=(url) => {
+
+  // }
+
+  const downloadFile =  (url) => {
+    fetch(url)
+      .then(res => res.blob())
+      .then(blob => {
+      const blobURL = window.URL.createObjectURL(new Blob([blob]))
+      // use an url in the Public Folder
+      const fileName = url.split("/").pop()
+
+      const aTag = document.createElement('a')
+      // aTag.href = url
+      aTag.href = blobURL
+      aTag.setAttribute('download', fileName)
+      document.body.appendChild(aTag)
+
+      aTag.click()
+      // Not sure if need remove here
+      aTag.remove()
+    })
+
   }
+
 
   return (
     // <div className='App'>
@@ -73,11 +98,10 @@ function App() {
 
     <div className="App">
       <h1>Download Files from API</h1>
-      <button onClick={downloadPDF}>
-        {loader? (<>Downloading</>) : (<>Download</>)}
-      </button>
-
-      {error !== '' && (<div className="error-msg">{error}</div>)}
+      <button onClick={() => {downloadFile(PDF_FILE_URL);}}>Dowenload PNG File</button>
+      <button onClick={() => {downloadFile(PDF_FILE_URL);}}>Dowenload PDF File</button>
+      <button onClick={() => {downloadFile(CSV_FILE_URL);}}>Dowenload CSV File</button>
+      <button onClick={() => {downloadFile(ZIP_FILE_URL);}}>Dowenload ZIP File</button>
     </div>
   )
 }
