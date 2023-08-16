@@ -10,7 +10,6 @@ import axios from 'axios'
 // File URL
 const PNG_FILE_URL = 'http://localhost:3000/file_png.png'
 const PDF_FILE_URL = 'http://localhost:3000/file_pdf.pdf'
-const CSV_FILE_URL = 'http://localhost:3000/file_csv.csv'
 const ZIP_FILE_URL = 'http://localhost:3000/file_zip.zip'
 
 function App() {
@@ -98,9 +97,8 @@ function App() {
 
     <div className="App">
       <h1>Download Files from API</h1>
-      <button onClick={() => {downloadFile(PDF_FILE_URL);}}>Dowenload PNG File</button>
+      <button onClick={() => {downloadFile(PNG_FILE_URL);}}>Dowenload PNG File</button>
       <button onClick={() => {downloadFile(PDF_FILE_URL);}}>Dowenload PDF File</button>
-      <button onClick={() => {downloadFile(CSV_FILE_URL);}}>Dowenload CSV File</button>
       <button onClick={() => {downloadFile(ZIP_FILE_URL);}}>Dowenload ZIP File</button>
     </div>
   )
