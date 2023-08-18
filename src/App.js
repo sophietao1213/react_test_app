@@ -50,6 +50,7 @@ function App() {
       const blobURL = window.URL.createObjectURL(new Blob([blob]))
       // use an url in the Public Folder
       const fileName = url.split("/").pop()
+      console.log(blobURL)
 
       const aTag = document.createElement('a')
       // aTag.href = url
@@ -61,7 +62,27 @@ function App() {
       // Not sure if need remove here
       aTag.remove()
     })
+  }
 
+  function download(filename) {
+    fetch('/download/' + filename)
+    .then((res) => {
+      console.log(res)
+      res.blob()
+    })
+    .then((blob)=>{
+      const blobURL = window.URL.createObjectURL(new Blob([blob]))
+
+      const aTag = document.createElement('a')
+      // aTag.href = url
+      aTag.href = blobURL
+      aTag.setAttribute('download', filename)
+      document.body.appendChild(aTag)
+
+      aTag.click()
+      // Not sure if need remove here
+      aTag.remove()
+    })
   }
 
 
@@ -100,6 +121,11 @@ function App() {
       <button onClick={() => {downloadFile(PNG_FILE_URL);}}>Dowenload PNG File</button>
       <button onClick={() => {downloadFile(PDF_FILE_URL);}}>Dowenload PDF File</button>
       <button onClick={() => {downloadFile(ZIP_FILE_URL);}}>Dowenload ZIP File</button>
+      <h1>Download file form Flask</h1>
+      <button onClick={() => {download('file_png.png')}}>Dowenload PNG File</button>
+      <button onClick={() => {download('logo192.png')}}>Dowenload 192PNG File</button>
+      <button onClick={() => {download('file_pdf.pdf');}}>Dowenload PDF File</button>
+      <button onClick={() => {download('file_zip.zip');}}>Dowenload ZIP File</button>
     </div>
   )
 }
